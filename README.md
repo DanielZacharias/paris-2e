@@ -1,8 +1,8 @@
-# Les Deux Étoiles — París 2★ Michelin 2026
+# Une Étoile — los 1★ de París hasta €200
 
-Página de una sola vista para elegir restaurante entre Lu, Rodri y Daniel: las 21 mesas de
-dos estrellas Michelin de París (guía 2026) cruzadas con puntajes de Google Maps y precios
-aproximados por persona.
+Página de una sola vista para elegir restaurante entre Lu, Rodri y Daniel: 17 mesas de una
+estrella Michelin en París que entran en €200 por persona, cruzadas con los puntajes de
+Google Maps y con la apertura del viernes 25 y sábado 26 de septiembre de 2026.
 
 **Publicada en:** https://danielzacharias.github.io/paris-2e/
 
@@ -14,16 +14,19 @@ Los puntajes (1–5) y los comentarios se comparten entre los tres y se actualiz
 
 - Una fila escribe **solo** en el documento de esa persona, así dos personas cargando filas
   distintas nunca se pisan. Si dos editan la *misma* fila a la vez, queda el último cambio.
-- Todo queda además en `localStorage` como respaldo: si el store no responde, la página sigue
-  andando y no se pierde nada localmente.
-- Las claves son aleatorias y no están listadas en ningún índice, pero **no hay autenticación**:
-  cualquiera que tenga el link puede leer y escribir. Es una lista de restaurantes, no un secreto.
+- Todo queda además en `localStorage` como respaldo.
+- Las claves son aleatorias, pero **no hay autenticación**: cualquiera con el link puede leer
+  y escribir. Es una lista de restaurantes, no un secreto.
 
-El ranking del grupo está al pie a propósito, para no sesgar la votación de quien recién entra.
+## Sobre los días
+
+Los campos `vie` y `sat` de cada restaurante indican si **abre** esa noche, según la web
+oficial de cada uno consultada en julio de 2026. No es disponibilidad de mesa: eso hay que
+pedirlo en su sistema de reservas.
+
+Del set actual, 16 de 17 abren el viernes 25 y solo 7 el sábado 26.
 
 ## Dar de baja
-
-Es una página pensada para durar unos días. Para borrarla junto con su URL:
 
 ```bash
 gh repo delete DanielZacharias/paris-2e --yes

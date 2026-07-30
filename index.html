@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Les Deux Étoiles · Los 2★ Michelin de París (2026)</title>
+<title>Une Étoile · Los mejores 1★ Michelin de París hasta €200 (2026)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -69,6 +69,14 @@
   .group-badge{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:var(--paper);background:var(--brass);border-radius:999px;padding:.22rem .5rem;white-space:nowrap;}
   .badge-one{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border:1px dashed var(--line-strong);border-radius:999px;padding:.2rem .5rem;white-space:nowrap;}
   .nodata{color:var(--muted);font-style:italic;font-size:.74rem;}
+  .days{display:flex;flex-direction:column;gap:.22rem;margin-top:.1rem;}
+  .satline{display:flex;gap:.45rem;align-items:baseline;font-family:'IBM Plex Mono',monospace;font-size:.66rem;line-height:1.35;padding:.36rem .5rem;border-radius:7px;}
+  .satline b{font-weight:500;letter-spacing:.06em;text-transform:uppercase;flex:none;}
+  .sat-si{background:rgba(63,125,78,.11);color:#33683f;}
+  .sat-no{background:rgba(110,20,35,.07);color:var(--muted);}
+  .sat-duda{background:rgba(169,128,63,.13);color:#7a5c2b;}
+  .warn{font-size:.76rem;line-height:1.4;color:#7a3b18;background:rgba(169,128,63,.1);border-left:2px solid var(--brass);border-radius:0 6px 6px 0;padding:.4rem .55rem;margin:.15rem 0 0;}
+  .chip-sat[aria-pressed="true"]{background:#33683f;border-color:#33683f;}
   .name{font-family:'Fraunces',serif;font-weight:500;font-size:1.32rem;line-height:1.08;letter-spacing:-.01em;margin:.1rem 0 0;}
   .place{font-size:.82rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:.35rem .55rem;align-items:center;}
   .place .dot{width:3px;height:3px;border-radius:50%;background:var(--line-strong);}
@@ -154,14 +162,14 @@
 </svg>
 
 <header class="hero">
-  <div class="hero-florets"><svg class="floret"><use href="#floret"/></svg><svg class="floret"><use href="#floret"/></svg></div>
-  <p class="eyebrow">Guía Michelin 2026 · París &amp; alrededores</p>
-  <h1>Les <em>Deux</em> Étoiles</h1>
-  <p class="sub">Las 21 mesas de dos estrellas Michelin de París —más Origines, una 1★ que entra por precio y por su carta de vinos—, cruzadas con los puntajes de Google Maps y precios aproximados por persona. Puntuá y comentá con Lu y Rodri.</p>
+  <div class="hero-florets"><svg class="floret"><use href="#floret"/></svg></div>
+  <p class="eyebrow">Guía Michelin 2026 · París · hasta €200 por persona</p>
+  <h1>Une <em>Étoile</em></h1>
+  <p class="sub">Los mejores restaurantes de una estrella Michelin de París que entran en €200 por persona, cruzados con los puntajes de Google Maps. La mejor comida por tu plata.</p>
   <div class="meta">
-    <span><b>21</b> mesas de 2★ <b>+1</b> de 1★</span>
-    <span><b>4</b> estrenos 2026</span>
-    <span><b>€46–480</b> rango por persona</span>
+    <span><b>17</b> restaurantes</span>
+    <span><b>1</b> estreno 2026</span>
+    <span><b>€60–200</b> por persona</span>
     <span>Cruce: Michelin × Google Maps</span>
   </div>
 </header>
@@ -172,9 +180,19 @@
       <button class="chip" data-cat="todos" aria-pressed="true">Todos</button>
       <button class="chip" data-cat="nuevo" aria-pressed="false">Estrenos 2026</button>
       <button class="chip" data-cat="valor" aria-pressed="false">Mejor valor</button>
-      <button class="chip" data-cat="vista" aria-pressed="false">Con vista</button>
+      <button class="chip chip-sat" data-cat="viernes" aria-pressed="false">Abren vie 25/9</button>
+      <button class="chip chip-sat" data-cat="sabado" aria-pressed="false">Abren sáb 26/9</button>
     </div>
     <div class="spacer"></div>
+    <div class="tool">
+      <label for="maxprice">Tope</label>
+      <select id="maxprice" aria-label="Precio máximo por persona">
+        <option value="0">Sin tope</option>
+        <option value="200">Hasta €200</option>
+        <option value="150">Hasta €150</option>
+        <option value="120">Hasta €120</option>
+      </select>
+    </div>
     <div class="tool search"><input id="search" type="search" placeholder="Buscar…" aria-label="Buscar restaurante"></div>
     <div class="tool">
       <label for="sort">Orden</label>
@@ -212,64 +230,49 @@
 
 <footer>
   <div class="bonus">
-    <b>Bonus — dos 3★ que entran por precio.</b> Si querés meter una tercera estrella sin pasarte:
-    <b>Pierre Gagnaire</b> (Google 4.6) tiene menú de mediodía ~€140–185, y <b>Kei</b> (Google 4.7) ronda los €398 en cena. Ambos son "3★ a precio de 2★" al almuerzo.
+    <b>El truco del almuerzo.</b> Casi todos bajan a €60–95 al mediodía por la misma cocina.
+    Si querés estirar el presupuesto, reservá el almuerzo: es donde estos 1★ dan el mejor valor de París.
   </div>
   <h3>Antes de reservar</h3>
   <ul>
-    <li>Precios <b>por persona, solo comida</b> (menú degustación o à la carte). El maridaje suma €120–400 aparte; en Francia el servicio ya va incluido.</li>
+    <li>Precios <b>por persona, solo comida</b> (menú degustación o à la carte). El maridaje suma aparte; en Francia el servicio ya va incluido.</li>
     <li>El <b>almuerzo</b> suele ser 40–60% más barato que la cena por la misma cocina — el mejor truco de valor.</li>
-    <li>Casi todos <b>cierran sábado y/o domingo</b>. Reservá los 2★ con 1–3 meses; los estrenos 2026 vuelan.</li>
+    <li>Muchos <b>cierran sábado y/o domingo</b>, pero casi todos abren el viernes: los filtros "Abren vie 25/9" y "Abren sáb 26/9" dejan solo los que sirven cena esa noche. Cada ficha muestra los dos días.</li>
+    <li><b>Ojo:</b> eso es si el restaurante <i>abre</i>, sacado de su propia web en julio de 2026. Que haya <i>mesa libre</i> para tres es otra cosa — hay que pedirla en su sistema de reservas, y estos lugares se llenan con semanas de anticipación.</li>
     <li>Cada ficha enlaza a <b>Google Maps</b> (reseñas, horarios y reserva) y al <b>sitio oficial</b>.</li>
     <li><b>Notas y puntajes:</b> se comparten entre los tres y se actualizan solos cada pocos segundos. Cualquiera puede cargar la fila de cualquiera — si dos editan la <i>misma</i> fila al mismo tiempo, queda el último cambio. También quedan guardados en tu navegador como respaldo.</li>
   </ul>
-  <p class="credit">Estrellas: Guía Michelin Francia 2026 · Puntajes y reseñas: Google Maps · Precios aproximados, verificá al reservar.</p>
+  <p class="credit">Estrellas: Guía Michelin Francia 2026 · Puntajes y reseñas: Google Maps · Horarios: web de cada restaurante, julio 2026 · Precios aproximados, verificá al reservar.</p>
 </footer>
 
 <script>
 const DATA = [
-  {name:"Alliance", area:"5º · Barrio Latino", cuisine:"Francesa", g:4.8, r:840, lunch:"€46–95", dinner:"€145–245", pf:46, cats:["nuevo","valor"], neo:true, pid:"ChIJeWenk-Rx5kcRRoSlhTbzWlM", web:"https://www.restaurant-alliance.fr", q:"Alliance, 5 Rue de Poissy, Paris", note:"Solo 8 mesas y menú sorpresa. Reviews eufóricas y precio suave para el nivel: el pick inteligente del grupo."},
-  {name:"Virtus", area:"12º · Bastille", cuisine:"Francesa", g:4.8, r:1467, lunch:null, dinner:"€145–210", pnote:"almuerzo solo viernes", pf:145, cats:["nuevo","valor"], neo:true, pid:"ChIJ__-zAA5y5kcRqLoe0pGwlcw", web:"https://www.virtus-paris.com", q:"Virtus, 29 Rue de Cotte, Paris", note:"Menú único de estación del chef Frédéric Lorimier (formado con Donckele). Salsas profundas, ambiente cálido."},
-  {name:"Hakuba", area:"1º · Cheval Blanc", cuisine:"Japonesa", g:4.8, r:105, lunch:null, dinner:"€250–350", pnote:"solo cena · omakase", pf:250, cats:["nuevo","japones"], neo:true, pid:"ChIJBWqlSgBv5kcRGYBEZG-nj7Y", web:"https://www.chevalblanc.com", q:"Hakuba, Cheval Blanc, Quai du Louvre, Paris", note:"Sushi de Takuya Watanabe + caldos y salsas afinados por Donckele. Dos turnos por noche. El estreno más premium."},
-  {name:"Le Corot", area:"Ville d'Avray · afueras", cuisine:"Francesa", g:4.8, r:81, lunch:null, dinner:"€155–185", pnote:"menús de 6–8 pasos", pf:155, cats:["nuevo","valor"], neo:true, pid:"ChIJa11Y8CJ95kcRgPrfFw87uRg", web:"https://www.etangs-corot.com/en/restaurant/corot-restaurant.html", q:"Le Corot, Les Etangs de Corot, Ville-d'Avray", note:"Verduras del Huerto del Rey de Versalles, cocina 'de la naturaleza'. Joya tranquila fuera de la ciudad."},
-  {name:"Sushi Yoshinaga", area:"2º · Ópera", cuisine:"Japonesa", g:4.8, r:189, lunch:null, dinner:"≈€330", pnote:"solo cena · omakase", pf:330, cats:["japones"], neo:false, pid:"ChIJIeDnbvVv5kcRCkaxpqe56vk", web:"https://www.27quatre.com/sushi-yoshinaga-en", q:"Sushi Yoshinaga, Rue du 4 Septembre, Paris", note:"Omakase íntimo (10 lugares). El chef es un showman que cuenta el porqué de cada pieza. Varios lo ponen sobre 3★."},
-  {name:"L'Orangerie", area:"8º · Four Seasons George V", cuisine:"Francesa", g:4.8, r:409, lunch:null, dinner:"€170–250", pnote:"almuerzo y cena", pf:170, cats:[], neo:false, pid:"ChIJZ8yNJuhv5kcRAcHrclt49NM", web:"https://www.fourseasons.com/paris/", q:"L'Orangerie, George V, Avenue George V, Paris", note:"La opción más liviana y vegetal, del chef Alan Taudon. Foco en mar y verdura, dentro del palacio George V."},
-  {name:"La Scène", area:"8º · Champs-Élysées", cuisine:"Francesa", g:4.7, r:1047, lunch:"€150–190", dinner:"€260–330", pf:150, cats:[], neo:false, web:"https://www.la-scene.paris", q:"La Scène Stéphanie Le Quellec, 32 Avenue Matignon, Paris", note:"Stéphanie Le Quellec, Chef del Año 2026 (Gault&Millau). Cocina abierta como un teatro, ritual de barra al llegar."},
-  {name:"Le Clarence", area:"8º · Champs-Élysées", cuisine:"Francesa clásica", g:4.7, r:838, lunch:"€130–190", dinner:"≈€330", pf:130, cats:[], neo:false, web:"https://www.le-clarence.paris", q:"Le Clarence, 31 Avenue Franklin Roosevelt, Paris", note:"Palacete privado de la familia Haut-Brion: la apuesta si te importa el vino. Fue #28 del mundo. Carro de quesos brutal."},
-  {name:"Le Taillevent", area:"8º · Champs-Élysées", cuisine:"Clásica", g:4.7, r:793, lunch:"≈€158", dinner:"≈€240", pf:158, cats:["clasico"], neo:false, web:"https://www.letaillevent.com", q:"Le Taillevent, 15 Rue Lamennais, Paris", note:"El clásico old-school por excelencia. Carta de vinos legendaria (literalmente un libro). Servicio pulido y atemporal."},
-  {name:"Guy Savoy", area:"6º · Monnaie de Paris", cuisine:"Francesa", g:4.7, r:1764, lunch:null, dinner:"≈€435", pnote:"almuerzo mié–sáb, más barato", pf:435, cats:["clasico","vista"], neo:false, web:"https://www.guysavoy.com", q:"Restaurant Guy Savoy, Monnaie de Paris, Quai de Conti, Paris", note:"Ex-3★, hoy 2★. Vista al Sena. La sopa de alcaucil con trufa es un clásico moderno. El más querido por el público."},
-  {name:"David Toutain", area:"7º · Invalides", cuisine:"Francesa creativa", g:4.6, r:877, lunch:"€75–135", dinner:"€195–285", pf:75, cats:["valor"], neo:false, web:"https://www.davidtoutain.com", q:"Restaurant David Toutain, 29 Rue Surcouf, Paris", note:"Cocina d'auteur vegetal y creativa (viene de Arpège). El almuerzo corto es la mejor puerta de entrada a un 2★ serio."},
-  {name:"L'Abysse au Pavillon Ledoyen", area:"8º · Champs-Élysées", cuisine:"Japonesa", g:4.6, r:255, lunch:"€120–180", dinner:"€250–320", pf:120, cats:["japones"], neo:false, web:"https://www.yannick-alleno.com", q:"L'Abysse Pavillon Ledoyen, Carré des Champs-Élysées, Paris", note:"Barra de sushi de altísimo nivel dentro del imperio de Yannick Alléno. Distinto a todo el resto de la lista."},
-  {name:"Palais Royal Restaurant", area:"1º · Palais Royal", cuisine:"Greco-francesa", g:4.6, r:753, lunch:null, dinner:"€145–195", pnote:"almuerzo y cena", pf:145, cats:["valor"], neo:false, pid:"ChIJ9Qib9SRu5kcR_FskEW89_hM", web:"https://www.palaisroyalrestaurant.com", q:"Palais Royal Restaurant, Galerie de Valois, Paris", note:"Cocina greco-francesa de Philip Chronopoulos, en los jardines del Palais Royal. Ubicación preciosa, buen valor."},
-  {name:"L'Oiseau Blanc", area:"16º · Peninsula (rooftop)", cuisine:"Francesa contemporánea", g:4.6, r:1948, lunch:"≈€160", dinner:"€200–230", pf:160, cats:["vista"], neo:false, pid:"ChIJZXST6-5v5kcR2yYcipYCUqA", web:"https://www.peninsula.com/en/paris", q:"L'Oiseau Blanc, Peninsula, Avenue Kléber, Paris", note:"Rooftop del Peninsula con vista a la Torre Eiffel. Más 'experiencia con vista' que templo; el ambiente es imbatible."},
-  {name:"Blanc", area:"16º · Trocadéro", cuisine:"Franco-japonesa", g:4.6, r:67, lunch:"≈€180", dinner:"≈€360", pnote:"almuerzo mié y sáb", pf:180, cats:["japones"], neo:false, pid:"ChIJ-We0YUpv5kcREptIC-71C_Y", web:"https://www.blanc-paris.com", q:"Blanc, 52 Rue de Longchamp, Paris", note:"Chef Shinichi Sato (ex-Passage 53), interior de Kengo Kuma. Técnica japonesa quirúrgica y carta de vinos enorme (1.500+ etiquetas)."},
-  {name:"Le Meurice Alain Ducasse", area:"1º · Tullerías", cuisine:"Francesa haute", g:4.4, r:1007, lunch:null, dinner:"€260–390", pnote:"solo cena", pf:260, cats:["clasico"], neo:false, pid:"ChIJQdFbHk9v5kcRBtFW38NDhbc", web:"https://www.dorchestercollection.com/paris/le-meurice", q:"Restaurant Le Meurice Alain Ducasse, Rue de Rivoli, Paris", note:"Salón estilo Versalles frente a las Tullerías. Ex-3★, hoy 2★. Lujo de palacio, servicio impecable."},
-  {name:"Le Jules Verne", area:"7º · Torre Eiffel", cuisine:"Francesa moderna", g:4.4, r:3606, lunch:"€160–210", dinner:"€255–320", pf:160, cats:["vista"], neo:false, pid:"ChIJl_7p8uFv5kcRj5ZGEf31ILM", web:"https://www.lejulesverne-paris.com", q:"Le Jules Verne, Tour Eiffel, Paris", note:"Dentro de la Torre Eiffel. Se paga la vista tanto como el plato. Reservá con 2+ semanas para el salón central."},
-  {name:"Le Grand Restaurant – J-F Piège", area:"8º · Madeleine", cuisine:"Francesa moderna", g:4.4, r:493, lunch:"≈€166", dinner:"≈€376", pnote:"almuerzo jue y vie", pf:166, cats:[], neo:false, web:"https://jeanfrancoispiege.com", q:"Le Grand Restaurant Jean-François Piège, 7 Rue d'Aguesseau, Paris", note:"Reviews divididas: presentación impecable, pero varios sienten que el sabor no acompaña el precio. Con la salvedad."},
-  {name:"Maison Rostang", area:"17º · Batignolles", cuisine:"Clásica", g:4.4, r:775, lunch:"€105–135", dinner:"€215–290", pf:105, cats:["clasico","valor"], neo:false, pid:"ChIJNVJhNJRv5kcRPUWaSPU5KZg", web:"https://www.maisonrostang.com", q:"Maison Rostang, 20 Rue Rennequin, Paris", note:"Clásico tradicional con carta de vinos enorme. Gran plan B: sale mejor de lo que las reviews sugieren."},
-  {name:"Marsan – Hélène Darroze", area:"6º · Saint-Germain", cuisine:"Francesa (suroeste)", g:4.3, r:990, lunch:"€75–120", dinner:"€175–260", pf:75, cats:["valor"], neo:false, web:"https://www.marsanhelenedarroze.com", q:"Marsan Hélène Darroze, 4 Rue d'Assas, Paris", note:"Cocina del suroeste, sabrosa y generosa en porciones. Ojo: dan carta sin precios a las mujeres (práctica anticuada)."},
-  {name:"Table – Bruno Verjus", area:"12º · Ledru-Rollin", cuisine:"Francesa (producto)", g:4.3, r:488, lunch:null, dinner:"≈€480", pnote:"mismo menú almuerzo y cena", pf:480, cats:[], neo:false, web:"https://table.paris", q:"Table Bruno Verjus, 3 Rue de Prague, Paris", note:"#8 del mundo (50 Best). Producto obsesivo, barra frente a la cocina. La crítica lo venera; el público, dividido."},
-  // Fuera de las 2★: lo sumamos igual porque entra por precio y por la carta de vinos.
-  {name:"Origines", area:"8º · Champs-Élysées", cuisine:"Francesa moderna", g:null, r:null, lunch:"€62–75", dinner:"€120–150", pnote:"menús de 3–6 pasos · à la carte €34–66", pf:62, cats:["valor"], neo:false, stars:1, web:"https://www.origines-restaurant.com", q:"Origines Restaurant, 6 Rue de Ponthieu, Paris", note:"Julien Boscus (ex-Les Climats), 1★ desde 2025. Carta de 800 vinos elegida la mejor de Francia por Terre de Vins. El almuerzo de €62 es lo más accesible de toda la lista después de Alliance."}
+  {name:"Aldehyde", area:"4º · Marais", cuisine:"Franco-tunecina", g:4.9, r:459, lunch:"€65", dinner:"€120–155", pf:65, pmax:155, cats:["nuevo","valor"], neo:true, stars:1, ctype:"Del mundo", pid:"ChIJuZn5THBx5kcRIN1OExKjBoU", q:"Aldehyde, 5 Rue du Pont Louis-Philippe, Paris", web:"https://aldehyde.paris", vie:"si", vieNote:"cena lunes a viernes, 19:30", sat:"no", satNote:"su web dice cena lun–vie; otras fuentes dicen mié–sáb — confirmá por teléfono", note:"Estreno 2026. Youssef Marzouk cruza técnica francesa con sabores de su Túnez natal. El mejor puntaje de Google de toda la lista."},
+  {name:"Mallory Gabsi", area:"17º · Ternes", cuisine:"Belga-francesa", g:4.8, r:2517, lunch:"€75", dinner:"€130–160", pf:75, pmax:160, cats:["valor"], stars:1, ctype:"Francesa moderna", pid:"ChIJM4_nbTpv5kcRFJubN2v3Cpw", q:"Mallory Gabsi, 28 Rue des Acacias, Paris", web:"https://mallory-gabsi.com", vie:"si", vieNote:"abre lunes a viernes", sat:"no", satNote:"cierra sábado y domingo", note:"Ex-Top Chef belga. Cocina moderna del norte, sala preciosa. 2.500+ reseñas con 4.8, casi imposible a ese volumen. El chef pasa por las mesas."},
+  {name:"Mosuke", area:"14º · Pernety", cuisine:"Afro-japonesa-francesa", g:4.8, r:1837, lunch:"€145", dinner:"€255", pnote:"15 y 25 pasos · precios de su web", pf:145, pmax:255, cats:[], stars:1, ctype:"Del mundo", pid:"ChIJZf2wJx9x5kcRTD2DAPk3rP0", q:"Mosuke par Mory Sacko, 11 Rue Raymond Losserand, Paris", web:"https://www.mosuke-restaurant.com", vie:"si", vieNote:"abre martes a sábado", sat:"si", satNote:"abre martes a sábado", warn:"Su web hoy marca €145 el almuerzo y €255 la cena: se pasa del tope de €200.", note:"Mory Sacko: raíces africanas, técnica francesa y toques japoneses. Único en su tipo y muy querido."},
+  {name:"Granite", area:"1º · Louvre", cuisine:"Francesa moderna", g:4.7, r:756, lunch:"€65–98", dinner:"≈€158", pf:65, pmax:158, cats:["valor"], stars:1, ctype:"Francesa moderna", pid:"ChIJ63m1Hxpv5kcRtffG6PtiUyY", q:"Granite, 6 Rue Bailleul, Paris", web:"https://www.granite.paris", vie:"si", vieNote:"abre lunes a viernes", sat:"no", satNote:"cierra sábado y domingo", note:"Al lado de la cocina, muy íntimo. Menús con relación precio-calidad brutal, sobre todo al mediodía."},
+  {name:"Pages", area:"16º · Kléber", cuisine:"Japonesa-francesa", g:4.7, r:200, lunch:"≈€95", dinner:"≈€170", pf:95, pmax:170, cats:["valor"], stars:1, ctype:"Fusión japonesa", pid:"ChIJQ6gX3jFv5kcRoGqtiEhHaWE", q:"Restaurant Pages, 4 Rue Auguste Vacquerie, Paris", web:"https://www.restaurantpages.fr", vie:"si", vieNote:"abre lunes a viernes", sat:"no", satNote:"cierra sábado", note:"Japonesa-francesa con caja de maduración de carne a la vista. Wagyu memorable."},
+  {name:"Tomy & Co", area:"7º · Invalides", cuisine:"Francesa moderna", g:4.7, r:824, lunch:"≈€65", dinner:"€120–150", pf:65, pmax:150, cats:["valor"], stars:1, ctype:"Francesa moderna", pid:"ChIJc-FTvNlv5kcRhrLo0P6xZIg", q:"Tomy & Co, 22 Rue Surcouf, Paris", web:"https://tomygousset.com/tomy-and-co/", vie:"si", vieNote:"abre lunes a viernes, cena 19:15–21:30", sat:"no", satNote:"cierra sábado y domingo", note:"Tomy Gousset cerca de los Invalides. Postres muy elogiados."},
+  {name:"Sola", area:"5º · Barrio Latino", cuisine:"Japonesa-francesa", g:4.7, r:893, lunch:"≈€65", dinner:"€110–130", pf:65, pmax:130, cats:["valor"], stars:1, ctype:"Fusión japonesa", pid:"ChIJZ3ZKSOFx5kcRJa7xR8aZU_g", q:"Sola, 12 Rue de l'Hôtel Colbert, Paris", web:"https://www.restaurant-sola.com", vie:"si", vieNote:"viernes 12:30–14:00 y 19:00–00:30", sat:"si", satNote:"sábado 19:00–23:30", note:"Experiencia en la 'cave' descalzo, muy inmersiva. Fusión franco-japonesa delicada."},
+  {name:"Accents Table Bourse", area:"2º · Bourse", cuisine:"Francesa + pastelería japonesa", g:4.7, r:1207, lunch:"≈€65", dinner:"€135–175", pf:65, pmax:175, cats:["valor"], stars:1, ctype:"Fusión japonesa", pid:"ChIJCfSJczxu5kcR5iWOIrx0RLg", q:"Accents Table Bourse, 24 Rue Feydeau, Paris", web:"https://accents-restaurant.com", vie:"si", vieNote:"cena martes a sábado", sat:"si", satNote:"cena martes a sábado, 19:00–22:00", note:"Cocina francesa con pastelería japonesa (Ayumi Sugiyama). Menú de almuerzo de gran valor."},
+  {name:"Pantagruel", area:"1º · Palais Royal", cuisine:"Francesa creativa", g:4.7, r:1210, lunch:"≈€65", dinner:"≈€150", pf:65, pmax:150, cats:["valor"], stars:1, ctype:"Francesa moderna", pid:"ChIJdwLJVERv5kcRzAkzVCFMhBc", q:"Restaurant Pantagruel, 10 Rue de Richelieu, Paris", web:"https://www.restaurant-pantagruel.com", vie:"si", vieNote:"abre lunes a viernes", sat:"no", satNote:"cierra sábado y domingo", note:"Cada plato llega en tres variaciones del mismo ingrediente. Creativo y relajado."},
+  {name:"Auberge Nicolas Flamel", area:"3º · Marais", cuisine:"Francesa", g:4.6, r:2048, lunch:"≈€75", dinner:"€120–160", pf:75, pmax:160, cats:["valor"], stars:1, ctype:"Francesa moderna", pid:"ChIJD5opUxpu5kcRXidM9DzLh_Q", q:"Auberge Nicolas Flamel, 51 Rue de Montmorency, Paris", web:"https://auberge.nicolas-flamel.fr", vie:"si", vieNote:"abre lunes a sábado", sat:"si", satNote:"abre lunes a sábado, cena 19:00–21:30", note:"En la casa de piedra más antigua de París (1407). Ambiente tipo cueva medieval."},
+  {name:"Oxte", area:"17º · Étoile", cuisine:"Mexicana-francesa", g:4.6, r:643, lunch:"≈€65", dinner:"€130–160", pf:65, pmax:160, cats:["valor"], stars:1, ctype:"Del mundo", pid:"ChIJCU_1nuxv5kcRmfS3m_h6mCg", q:"Restaurant Oxte, 5 Rue Troyon, Paris", web:"https://www.restaurant-oxte.com", vie:"si", vieNote:"abre martes a viernes", sat:"no", satNote:"cierra sábado", note:"Mole y aguachile elevados con técnica francesa. Accesible en precio para el nivel."},
+  {name:"Substance", area:"16º · Chaillot", cuisine:"Ítalo-francesa", g:null, r:null, lunch:"€68–98", dinner:"€98–188", pnote:"menús de 3 a 9 pasos · à la carte €42–68", pf:68, pmax:188, cats:["valor"], stars:1, ctype:"Del mundo", q:"Substance, 18 Rue de Chaillot, Paris", web:"https://www.substance.paris", vie:"si", vieNote:"abre lunes a viernes", sat:"no", satNote:"cierra sábado y domingo", warn:"Cambió de cocina: Matthias Marc se fue el 31/12/2025 y ahora lo llevan Flavio Lucarini y Aurora Storari.", note:"El que pasaste por Maps. Hoy es ítalo-francés bajo el Groupe Éclore, con 200+ champagnes elegidos con Anselme Selosse. Mantiene la estrella."},
+  {name:"Restaurant ES", area:"7º · Invalides", cuisine:"Japonesa-francesa", g:4.5, r:101, lunch:null, dinner:"≈€150", pnote:"solo cena", pf:150, pmax:150, cats:[], stars:1, ctype:"Fusión japonesa", pid:"ChIJ3dS2pSpw5kcR_W2ALSc4OWA", q:"Restaurant ES, 91 Rue de Grenelle, Paris", web:"https://es-restaurant.fr", vie:"si", vieNote:"cena martes a sábado", sat:"si", satNote:"cena martes a sábado", note:"'Quizás el mejor 1★ de París' según varios. Takayuki Honjo casi solo tras la barra."},
+  {name:"Quinsou", area:"6º · Saint-Germain", cuisine:"Francesa moderna", g:4.4, r:425, lunch:"≈€60", dinner:"≈€125", pf:60, pmax:125, cats:["valor"], stars:1, ctype:"Francesa moderna", pid:"ChIJh1sXFdJx5kcRPk-FmWcYRfU", q:"Quinsou, 33 Rue de l'Abbé Grégoire, Paris", web:"https://www.quinsourestaurant.fr", vie:"si", vieNote:"viernes 12:30–14:00 y 19:30–21:30", sat:"si", satNote:"sábado 19:30–21:30", note:"Frente a la escuela Ferrandi. Postre de miel fermentada muy copiado. Gran valor al mediodía."},
+  {name:"Septime", area:"11º · Charonne", cuisine:"Bistronomía", g:4.3, r:1407, lunch:"≈€85", dinner:"≈€135", pf:85, pmax:135, cats:[], stars:1, ctype:"Francesa moderna", pid:"ChIJE6kCUghy5kcRmWSg3RUHIwM", q:"Septime, 80 Rue de Charonne, Paris", web:"https://www.septime-charonne.fr", vie:"si", vieNote:"abre lunes a viernes", sat:"no", satNote:"cierra sábado y domingo", note:"#40 del mundo y la reserva más difícil de París. Estilo fermentado divisivo: lo amás u odiás."},
+  {name:"Le Châteaubriand", area:"11º · Belleville", cuisine:"Bistronomía", g:4.3, r:855, lunch:null, dinner:"≈€120", pnote:"almuerzo solo sáb", pf:120, pmax:120, cats:[], stars:1, ctype:"Francesa moderna", pid:"ChIJIfiOtuNt5kcRuMiQz0CoNA4", q:"Le Châteaubriand, 129 Avenue Parmentier, Paris", web:"https://www.lechateaubriand.net", vie:"duda", vieNote:"con el cierre anunciado, confirmá antes", sat:"duda", satNote:"Michelin lo da abierto el sábado, pero con el cierre anunciado hay que confirmar", warn:"Aizpitarte anunció el cierre (se muda a Saint-Jean-de-Luz) y no tiene estrella desde 2021. Sin fecha confirmada.", note:"Iñaki Aizpitarte, menú sin opciones en Belleville. Salsas muy elogiadas."},
+  {name:"Baieta", area:"5º · Barrio Latino", cuisine:"Niçoise / mediterránea", g:4.3, r:902, lunch:"≈€60", dinner:"€90–135", pf:60, pmax:135, cats:["valor"], stars:1, ctype:"Francesa moderna", pid:"ChIJ_78oYuRx5kcR4eAyZp92YKs", q:"Baieta, 5 Rue de Pontoise, Paris", web:"https://restaurant-baieta-paris.fr", vie:"si", vieNote:"abre martes a sábado", sat:"si", satNote:"abre martes a sábado", note:"Julia Sedefdjian, la chef estrellada más joven de Francia. Cocina niçoise/mediterránea luminosa."}
 ];
 
-const CAT_LABEL = {nuevo:"Estreno 2026", valor:"Valor", japones:"Japonés", vista:"Con vista", clasico:"Clásico"};
+const CAT_LABEL = {nuevo:"Estreno 2026", valor:"Valor"};
 const PEOPLE = [{key:"lu",label:"Lu"},{key:"rodri",label:"Rodri"},{key:"daniel",label:"Daniel"}];
 const STORE_KEY = "paris2e_notes_v1";
 
 DATA.forEach(d=>{ d.id = d.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); });
 
-const CUISINE_ORDER = ["Francesa moderna","Francesa clásica","Japonesa","Franco-japonesa","Greco-francesa"];
-const CLASSIC_NAMES = new Set(["Guy Savoy","Le Meurice Alain Ducasse"]);
-function cuisineType(d){
-  const c=d.cuisine.toLowerCase();
-  if(c.indexOf("franco")>-1 && c.indexOf("japon")>-1) return "Franco-japonesa";
-  if(c.indexOf("japon")>-1) return "Japonesa";
-  if(c.indexOf("greco")>-1) return "Greco-francesa";
-  if(c.indexOf("clásica")>-1 || c.indexOf("clasica")>-1 || CLASSIC_NAMES.has(d.name)) return "Francesa clásica";
-  return "Francesa moderna";
-}
-DATA.forEach(d=>{ d.ctype = cuisineType(d); });
+const CUISINE_ORDER = ["Francesa moderna","Fusión japonesa","Del mundo"];
 
 let NOTES = {};
 let storageOK = true;
@@ -431,13 +434,18 @@ function groupAvg(id){
 
 const grid = document.getElementById('grid');
 const countEl = document.getElementById('count');
-let state = {cat:"todos", sort:"group", q:"", cuisines:new Set(CUISINE_ORDER)};
+let state = {cat:"todos", sort:"group", q:"", cuisines:new Set(CUISINE_ORDER), maxPrice:0};
 
-function starsSVG(d){
-  const n = (d && d.stars) || 2;
-  let s = '<span class="stars">';
-  for(let i=0;i<n;i++) s += '<svg class="floret"><use href="#floret"/></svg>';
-  return s+'</span>';
+function starsSVG(n){ let s=''; for(let i=0;i<(n||1);i++){ s+='<svg class="floret"><use href="#floret"/></svg>'; } return '<span class="stars">'+s+'</span>'; }
+// Apertura del viernes 25 y sábado 26 de septiembre de 2026, según la web de cada
+// restaurante. Es si abren esa noche — la disponibilidad de mesa hay que pedirla.
+function dayCell(label, st, note){
+  const map = {si:["abre","sat-si"], no:["cierra","sat-no"], duda:["a confirmar","sat-duda"]};
+  const m = map[st] || map.duda;
+  return '<div class="satline '+m[1]+'"><b>'+label+'</b><span>'+m[0]+(note?' · '+note:'')+'</span></div>';
+}
+function daysLine(d){
+  return '<div class="days">'+dayCell('Vie 25/9', d.vie, d.vieNote)+dayCell('Sáb 26/9', d.sat, d.satNote)+'</div>';
 }
 function googleLine(d){
   if(d.g == null) return '<span class="v nodata">sin verificar — mirá el link de Maps</span>';
@@ -473,10 +481,14 @@ function notesPanel(d){
 
 function render(){
   let list = DATA.filter(d=>{
-    const okCat = state.cat==="todos" || d.cats.includes(state.cat);
+    const okCat = state.cat==="todos" ? true
+                : state.cat==="sabado"  ? d.sat!=="no"
+                : state.cat==="viernes" ? d.vie!=="no"
+                : d.cats.includes(state.cat);
     const okCuisine = state.cuisines.has(d.ctype);
     const okQ = !state.q || (d.name+d.area+d.cuisine).toLowerCase().includes(state.q);
-    return okCat && okCuisine && okQ;
+    const okPrice = !state.maxPrice || (d.pmax||d.pf) <= state.maxPrice;
+    return okCat && okCuisine && okQ && okPrice;
   });
   list.sort((a,b)=>{
     if(state.sort==="group"){ const ga=groupAvg(a.id), gb=groupAvg(b.id); return (gb==null?-1:gb)-(ga==null?-1:ga) || gSort(b)-gSort(a); }
@@ -496,7 +508,7 @@ function render(){
     card.className='card';
     card.style.animationDelay=(Math.min(i,12)*0.035)+'s';
     card.innerHTML =
-      '<div class="card-top"><div class="stars-wrap">'+starsSVG(d)+'</div><div class="ct-right">'+(d.stars===1?'<span class="badge-one">1★ Michelin</span>':'')+(d.neo?'<span class="badge-new">Nuevo 2026</span>':'')+gb+'</div></div>'+
+      '<div class="card-top"><div class="stars-wrap">'+starsSVG(d.stars)+'</div><div class="ct-right">'+(d.neo?'<span class="badge-new">Nuevo 2026</span>':'')+gb+'</div></div>'+
       '<h2 class="name">'+d.name+'</h2>'+
       '<div class="place"><span>'+d.area+'</span><span class="dot"></span><span>'+d.cuisine+'</span></div>'+
       '<div class="divider"></div>'+
@@ -504,11 +516,13 @@ function render(){
         '<div class="row"><span class="k">Google</span>'+googleLine(d)+'</div>'+
         '<div class="row"><span class="k">Precio</span><span class="v">'+priceLine(d)+'</span></div>'+
       '</div>'+
+      daysLine(d)+
+      (d.warn?'<p class="warn">⚠ '+d.warn+'</p>':'')+
       '<p class="note">'+d.note+'</p>'+
       (tags?'<div class="tags">'+tags+'</div>':'')+
       '<div class="links">'+
         '<a class="btn-link" href="'+gmaps(d)+'" target="_blank" rel="noopener">Google Maps ↗</a>'+
-        '<a class="btn-link alt" href="'+d.web+'" target="_blank" rel="noopener">Sitio web ↗</a>'+
+        (d.web?'<a class="btn-link alt" href="'+d.web+'" target="_blank" rel="noopener">Sitio web ↗</a>':'')+
       '</div>'+
       notesPanel(d);
     grid.appendChild(card);
@@ -561,6 +575,7 @@ document.getElementById('chips').addEventListener('click', e=>{
   render();
 });
 document.getElementById('sort').addEventListener('change', e=>{state.sort=e.target.value;render();});
+document.getElementById('maxprice').addEventListener('change', e=>{state.maxPrice=+e.target.value;render();});
 document.getElementById('search').addEventListener('input', e=>{state.q=e.target.value.trim().toLowerCase();render();});
 
 // cuisine-type checkboxes
