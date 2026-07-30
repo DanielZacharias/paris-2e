@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Les Deux Étoiles · Las 21 mesas de 2★ Michelin de París (2026)</title>
+<title>Les Deux Étoiles · Los 2★ Michelin de París (2026)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -67,6 +67,8 @@
   .stars .floret{width:1.15rem;height:1.15rem;}
   .badge-new{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--bordeaux);border:1px solid var(--bordeaux);border-radius:999px;padding:.2rem .5rem;white-space:nowrap;}
   .group-badge{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:var(--paper);background:var(--brass);border-radius:999px;padding:.22rem .5rem;white-space:nowrap;}
+  .badge-one{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border:1px dashed var(--line-strong);border-radius:999px;padding:.2rem .5rem;white-space:nowrap;}
+  .nodata{color:var(--muted);font-style:italic;font-size:.74rem;}
   .name{font-family:'Fraunces',serif;font-weight:500;font-size:1.32rem;line-height:1.08;letter-spacing:-.01em;margin:.1rem 0 0;}
   .place{font-size:.82rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:.35rem .55rem;align-items:center;}
   .place .dot{width:3px;height:3px;border-radius:50%;background:var(--line-strong);}
@@ -155,9 +157,9 @@
   <div class="hero-florets"><svg class="floret"><use href="#floret"/></svg><svg class="floret"><use href="#floret"/></svg></div>
   <p class="eyebrow">Guía Michelin 2026 · París &amp; alrededores</p>
   <h1>Les <em>Deux</em> Étoiles</h1>
-  <p class="sub">Las 21 mesas de dos estrellas Michelin de París, cruzadas con los puntajes de Google Maps y precios aproximados por persona. Puntuá y comentá con Lu y Rodri.</p>
+  <p class="sub">Las 21 mesas de dos estrellas Michelin de París —más Origines, una 1★ que entra por precio y por su carta de vinos—, cruzadas con los puntajes de Google Maps y precios aproximados por persona. Puntuá y comentá con Lu y Rodri.</p>
   <div class="meta">
-    <span><b>21</b> restaurantes</span>
+    <span><b>21</b> mesas de 2★ <b>+1</b> de 1★</span>
     <span><b>4</b> estrenos 2026</span>
     <span><b>€46–480</b> rango por persona</span>
     <span>Cruce: Michelin × Google Maps</span>
@@ -246,7 +248,9 @@ const DATA = [
   {name:"Le Grand Restaurant – J-F Piège", area:"8º · Madeleine", cuisine:"Francesa moderna", g:4.4, r:493, lunch:"≈€166", dinner:"≈€376", pnote:"almuerzo jue y vie", pf:166, cats:[], neo:false, web:"https://jeanfrancoispiege.com", q:"Le Grand Restaurant Jean-François Piège, 7 Rue d'Aguesseau, Paris", note:"Reviews divididas: presentación impecable, pero varios sienten que el sabor no acompaña el precio. Con la salvedad."},
   {name:"Maison Rostang", area:"17º · Batignolles", cuisine:"Clásica", g:4.4, r:775, lunch:"€105–135", dinner:"€215–290", pf:105, cats:["clasico","valor"], neo:false, pid:"ChIJNVJhNJRv5kcRPUWaSPU5KZg", web:"https://www.maisonrostang.com", q:"Maison Rostang, 20 Rue Rennequin, Paris", note:"Clásico tradicional con carta de vinos enorme. Gran plan B: sale mejor de lo que las reviews sugieren."},
   {name:"Marsan – Hélène Darroze", area:"6º · Saint-Germain", cuisine:"Francesa (suroeste)", g:4.3, r:990, lunch:"€75–120", dinner:"€175–260", pf:75, cats:["valor"], neo:false, web:"https://www.marsanhelenedarroze.com", q:"Marsan Hélène Darroze, 4 Rue d'Assas, Paris", note:"Cocina del suroeste, sabrosa y generosa en porciones. Ojo: dan carta sin precios a las mujeres (práctica anticuada)."},
-  {name:"Table – Bruno Verjus", area:"12º · Ledru-Rollin", cuisine:"Francesa (producto)", g:4.3, r:488, lunch:null, dinner:"≈€480", pnote:"mismo menú almuerzo y cena", pf:480, cats:[], neo:false, web:"https://table.paris", q:"Table Bruno Verjus, 3 Rue de Prague, Paris", note:"#8 del mundo (50 Best). Producto obsesivo, barra frente a la cocina. La crítica lo venera; el público, dividido."}
+  {name:"Table – Bruno Verjus", area:"12º · Ledru-Rollin", cuisine:"Francesa (producto)", g:4.3, r:488, lunch:null, dinner:"≈€480", pnote:"mismo menú almuerzo y cena", pf:480, cats:[], neo:false, web:"https://table.paris", q:"Table Bruno Verjus, 3 Rue de Prague, Paris", note:"#8 del mundo (50 Best). Producto obsesivo, barra frente a la cocina. La crítica lo venera; el público, dividido."},
+  // Fuera de las 2★: lo sumamos igual porque entra por precio y por la carta de vinos.
+  {name:"Origines", area:"8º · Champs-Élysées", cuisine:"Francesa moderna", g:null, r:null, lunch:"€62–75", dinner:"€120–150", pnote:"menús de 3–6 pasos · à la carte €34–66", pf:62, cats:["valor"], neo:false, stars:1, web:"https://www.origines-restaurant.com", q:"Origines Restaurant, 6 Rue de Ponthieu, Paris", note:"Julien Boscus (ex-Les Climats), 1★ desde 2025. Carta de 800 vinos elegida la mejor de Francia por Terre de Vins. El almuerzo de €62 es lo más accesible de toda la lista después de Alliance."}
 ];
 
 const CAT_LABEL = {nuevo:"Estreno 2026", valor:"Valor", japones:"Japonés", vista:"Con vista", clasico:"Clásico"};
@@ -429,7 +433,17 @@ const grid = document.getElementById('grid');
 const countEl = document.getElementById('count');
 let state = {cat:"todos", sort:"group", q:"", cuisines:new Set(CUISINE_ORDER)};
 
-function starsSVG(){return '<span class="stars"><svg class="floret"><use href="#floret"/></svg><svg class="floret"><use href="#floret"/></svg></span>';}
+function starsSVG(d){
+  const n = (d && d.stars) || 2;
+  let s = '<span class="stars">';
+  for(let i=0;i<n;i++) s += '<svg class="floret"><use href="#floret"/></svg>';
+  return s+'</span>';
+}
+function googleLine(d){
+  if(d.g == null) return '<span class="v nodata">sin verificar — mirá el link de Maps</span>';
+  return '<span class="v gscore">'+d.g.toFixed(1)+' <span>('+d.r.toLocaleString('es')+')</span></span>';
+}
+function gSort(d){ return d.g == null ? -1 : d.g; }
 function gmaps(d){
   let u = 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.q);
   if(d.pid) u += '&query_place_id='+d.pid;
@@ -465,8 +479,8 @@ function render(){
     return okCat && okCuisine && okQ;
   });
   list.sort((a,b)=>{
-    if(state.sort==="group"){ const ga=groupAvg(a.id), gb=groupAvg(b.id); return (gb==null?-1:gb)-(ga==null?-1:ga) || b.g-a.g; }
-    if(state.sort==="google") return b.g-a.g || b.r-a.r;
+    if(state.sort==="group"){ const ga=groupAvg(a.id), gb=groupAvg(b.id); return (gb==null?-1:gb)-(ga==null?-1:ga) || gSort(b)-gSort(a); }
+    if(state.sort==="google") return gSort(b)-gSort(a) || (b.r||0)-(a.r||0);
     if(state.sort==="priceAsc") return a.pf-b.pf;
     if(state.sort==="priceDesc") return b.pf-a.pf;
     if(state.sort==="az") return a.name.localeCompare(b.name,'es');
@@ -482,12 +496,12 @@ function render(){
     card.className='card';
     card.style.animationDelay=(Math.min(i,12)*0.035)+'s';
     card.innerHTML =
-      '<div class="card-top"><div class="stars-wrap">'+starsSVG()+'</div><div class="ct-right">'+(d.neo?'<span class="badge-new">Nuevo 2026</span>':'')+gb+'</div></div>'+
+      '<div class="card-top"><div class="stars-wrap">'+starsSVG(d)+'</div><div class="ct-right">'+(d.stars===1?'<span class="badge-one">1★ Michelin</span>':'')+(d.neo?'<span class="badge-new">Nuevo 2026</span>':'')+gb+'</div></div>'+
       '<h2 class="name">'+d.name+'</h2>'+
       '<div class="place"><span>'+d.area+'</span><span class="dot"></span><span>'+d.cuisine+'</span></div>'+
       '<div class="divider"></div>'+
       '<div class="data">'+
-        '<div class="row"><span class="k">Google</span><span class="v gscore">'+d.g.toFixed(1)+' <span>('+d.r.toLocaleString('es')+')</span></span></div>'+
+        '<div class="row"><span class="k">Google</span>'+googleLine(d)+'</div>'+
         '<div class="row"><span class="k">Precio</span><span class="v">'+priceLine(d)+'</span></div>'+
       '</div>'+
       '<p class="note">'+d.note+'</p>'+
