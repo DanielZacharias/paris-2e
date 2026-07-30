@@ -1,8 +1,11 @@
-# Une Étoile — los 1★ de París hasta €200
+# Les Étoiles — Michelin París 2026, con tope de precio
 
-Página de una sola vista para elegir restaurante entre Lu, Rodri y Daniel: 17 mesas de una
-estrella Michelin en París que entran en €200 por persona, cruzadas con los puntajes de
-Google Maps y con la apertura del viernes 25 y sábado 26 de septiembre de 2026.
+Página de una sola vista para elegir restaurante entre Lu, Rodri y Daniel: 39 mesas de París
+—18 de una estrella que entran en €200 por persona y 21 de dos estrellas— cruzadas con los
+puntajes de Google Maps y con la apertura del viernes 25 y sábado 26 de septiembre de 2026.
+
+El tope de precio (€120 / €150 / €200) filtra por lo que sale la **cena**, no por el precio
+"desde": si no, un lugar de €480 con almuerzo de €150 pasaría el filtro de una cena de €200.
 
 **Publicada en:** https://danielzacharias.github.io/paris-2e/
 
@@ -24,7 +27,9 @@ Los campos `vie` y `sat` de cada restaurante indican si **abre** esa noche, seg�
 oficial de cada uno consultada en julio de 2026. No es disponibilidad de mesa: eso hay que
 pedirlo en su sistema de reservas.
 
-Del set actual, 16 de 17 abren el viernes 25 y solo 7 el sábado 26.
+Solo se consultaron para los que entran en €200; el resto queda en `"nc"` (sin consultar) y
+la ficha lo dice, en vez de aparentar un dato que no se buscó. De los consultados, 18 abren
+el viernes 25 y 8 el sábado 26.
 
 ## Dar de baja
 
