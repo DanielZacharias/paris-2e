@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Deux Étoiles · Las 21 mesas de 2★ Michelin de París (2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bordeaux:#6E1423;--bordeaux-deep:#2A0E14;--paper:#F6F1E8;--card:#FBF8F1;
+    --brass:#A9803F;--brass-lt:#C7A056;--ink:#2A0E14;--muted:#7C6A5E;
+    --line:rgba(42,14,20,0.12);--line-strong:rgba(42,14,20,0.22);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5;}
+  .floret{width:1em;height:1em;fill:var(--brass);flex:none;}
+
+  header.hero{background:var(--bordeaux-deep);color:var(--paper);padding:clamp(2.4rem,6vw,4.6rem) clamp(1.2rem,5vw,3rem) clamp(2rem,5vw,3.4rem);position:relative;overflow:hidden;border-bottom:3px solid var(--brass);}
+  .hero-florets{display:flex;gap:.5rem;margin-bottom:1.4rem;}
+  .hero-florets .floret{width:2.1rem;height:2.1rem;fill:var(--brass-lt);}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--brass-lt);margin:0 0 1rem;}
+  .hero h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2.5rem,7vw,4.6rem);line-height:.98;letter-spacing:-.01em;margin:0 0 .5rem;}
+  .hero h1 em{font-style:italic;color:var(--brass-lt);}
+  .hero .sub{font-size:clamp(1rem,2.3vw,1.22rem);max-width:44ch;color:rgba(246,241,232,.82);margin:0 0 1.6rem;}
+  .hero .meta{display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:rgba(246,241,232,.6);letter-spacing:.02em;}
+  .hero .meta b{color:var(--brass-lt);font-weight:500;}
+
+  .controls{position:sticky;top:0;z-index:20;background:rgba(246,241,232,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:.85rem clamp(1.2rem,5vw,3rem);}
+  .controls-inner{display:flex;flex-wrap:wrap;gap:.7rem 1rem;align-items:center;max-width:1240px;margin:0 auto;}
+  .chips{display:flex;flex-wrap:wrap;gap:.4rem;}
+  .chip{font-family:'IBM Plex Mono',monospace;font-size:.74rem;letter-spacing:.04em;padding:.42rem .8rem;border-radius:999px;border:1px solid var(--line-strong);background:transparent;color:var(--muted);cursor:pointer;transition:all .18s ease;white-space:nowrap;}
+  .chip:hover{border-color:var(--brass);color:var(--ink);}
+  .chip[aria-pressed="true"]{background:var(--bordeaux);border-color:var(--bordeaux);color:var(--paper);}
+  .spacer{flex:1 1 auto;}
+  .tool{display:flex;align-items:center;gap:.5rem;}
+  .tool label{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+  select,.search input{font-family:'Inter',sans-serif;font-size:.85rem;color:var(--ink);border:1px solid var(--line-strong);border-radius:8px;padding:.44rem .7rem;background:var(--card);}
+  select:focus-visible,.search input:focus-visible,.chip:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+  .search input{width:170px;}
+  .count{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--muted);white-space:nowrap;}
+
+  .notebar{max-width:1240px;margin:0 auto;padding:.7rem clamp(1.2rem,5vw,3rem);display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);}
+  .notebar-info{font-family:'IBM Plex Mono',monospace;font-size:.67rem;color:var(--muted);letter-spacing:.02em;}
+
+  .cuisine-row{margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--line);gap:.5rem .8rem;}
+  .filter-label{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);flex:none;}
+  .checks{display:flex;flex-wrap:wrap;gap:.4rem .9rem;}
+  .check{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--ink);cursor:pointer;user-select:none;}
+  .check input{accent-color:var(--bordeaux);width:15px;height:15px;cursor:pointer;flex:none;}
+  .check.off{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line-strong);}
+  .check .ct-count{font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--muted);}
+  .mini-links{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--muted);white-space:nowrap;}
+  .mini-links button{background:none;border:none;color:var(--bordeaux);cursor:pointer;font:inherit;padding:0;}
+  .mini-links button:hover{text-decoration:underline;}
+  .mini-links button:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+
+  main{padding:clamp(1.6rem,4vw,2.6rem) clamp(1.2rem,5vw,3rem) 1rem;max-width:1240px;margin:0 auto;}
+  .grid{display:grid;gap:1.1rem;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.25rem 1.3rem 1.2rem;display:flex;flex-direction:column;gap:.55rem;height:100%;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;position:relative;}
+  .card:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(42,14,20,.4);border-color:var(--brass);}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:.6rem;}
+  .ct-right{display:flex;align-items:center;gap:.4rem;flex-wrap:wrap;justify-content:flex-end;}
+  .stars{display:flex;gap:.18rem;}
+  .stars .floret{width:1.15rem;height:1.15rem;}
+  .badge-new{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--bordeaux);border:1px solid var(--bordeaux);border-radius:999px;padding:.2rem .5rem;white-space:nowrap;}
+  .group-badge{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:var(--paper);background:var(--brass);border-radius:999px;padding:.22rem .5rem;white-space:nowrap;}
+  .name{font-family:'Fraunces',serif;font-weight:500;font-size:1.32rem;line-height:1.08;letter-spacing:-.01em;margin:.1rem 0 0;}
+  .place{font-size:.82rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:.35rem .55rem;align-items:center;}
+  .place .dot{width:3px;height:3px;border-radius:50%;background:var(--line-strong);}
+  .divider{height:1px;background:var(--line);margin:.15rem 0 .1rem;}
+  .data{display:flex;flex-direction:column;gap:.32rem;font-family:'IBM Plex Mono',monospace;font-size:.8rem;}
+  .data .row{display:flex;gap:.5rem;align-items:baseline;}
+  .data .k{color:var(--muted);min-width:4.7em;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;}
+  .data .v{color:var(--ink);}
+  .gscore{color:var(--bordeaux);font-weight:500;}
+  .gscore span{color:var(--muted);font-weight:400;}
+  .note{font-size:.85rem;color:#4a3a33;line-height:1.42;min-height:4.3em;}
+  .tags{display:flex;flex-wrap:wrap;gap:.32rem;margin-top:.15rem;}
+  .tag{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.05em;color:var(--brass);border:1px solid rgba(169,128,63,.35);border-radius:5px;padding:.12rem .42rem;text-transform:uppercase;}
+
+  .links{display:flex;gap:.5rem;margin-top:auto;padding-top:.6rem;}
+  .btn-link{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.04em;text-decoration:none;color:var(--bordeaux);border:1px solid var(--line-strong);border-radius:8px;padding:.42rem .6rem;transition:all .16s ease;flex:1;text-align:center;white-space:nowrap;}
+  .btn-link:hover{background:var(--bordeaux);color:var(--paper);border-color:var(--bordeaux);}
+  .btn-link.alt{color:var(--brass);}
+  .btn-link.alt:hover{background:var(--brass);color:var(--paper);border-color:var(--brass);}
+  .btn-link:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+
+  .notes{margin-top:.5rem;border-top:1px solid var(--line);padding-top:.35rem;}
+  .notes-head{font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:.1rem 0 .3rem;}
+  .note-rows{display:flex;flex-direction:column;gap:.4rem;padding:.2rem 0 .2rem;}
+  .note-row{display:flex;align-items:center;gap:.45rem;}
+  .note-name{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink);width:3.6em;flex:none;}
+  .note-score{font-family:'IBM Plex Mono',monospace;font-size:.75rem;padding:.28rem .3rem;border:1px solid var(--line-strong);border-radius:6px;background:var(--paper);color:var(--ink);flex:none;width:3.6em;}
+  .note-comment{flex:1;min-width:0;font-family:'Inter',sans-serif;font-size:.8rem;padding:.34rem .5rem;border:1px solid var(--line-strong);border-radius:6px;background:var(--paper);color:var(--ink);}
+  .note-score:focus-visible,.note-comment:focus-visible{outline:2px solid var(--brass);outline-offset:1px;}
+
+  .empty{grid-column:1/-1;text-align:center;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:.85rem;padding:3rem 1rem;}
+
+  /* estado de sincronización */
+  .sync{display:inline-flex;align-items:center;gap:.4rem;font-family:'IBM Plex Mono',monospace;font-size:.67rem;letter-spacing:.02em;color:var(--muted);white-space:nowrap;}
+  .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex:none;transition:background .2s ease;}
+  .sync[data-state="ok"] .sync-dot{background:#3f7d4e;}
+  .sync[data-state="busy"] .sync-dot{background:var(--brass);animation:pulse 1s ease-in-out infinite;}
+  .sync[data-state="err"] .sync-dot{background:var(--bordeaux);}
+  @keyframes pulse{50%{opacity:.3;}}
+
+  /* podio del grupo (al pie, para no sesgar la votación) */
+  .podium{max-width:1240px;margin:2.2rem auto 0;padding:0 clamp(1.2rem,5vw,3rem);}
+  .podium-inner{background:var(--bordeaux-deep);border-radius:16px;padding:1.6rem clamp(1.1rem,3vw,2rem) 1.7rem;border:1px solid var(--brass);}
+  .podium h3{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-lt);margin:0 0 .3rem;}
+  .podium .ph-sub{font-size:.8rem;color:rgba(246,241,232,.62);margin:0 0 1.2rem;}
+  .podium-rows{display:flex;flex-direction:column;gap:.55rem;}
+  .prow{display:flex;align-items:center;gap:.8rem;color:var(--paper);}
+  .prank{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:500;color:var(--brass-lt);width:1.5em;flex:none;text-align:right;line-height:1;}
+  .pname{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:500;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .pbar{flex:0 1 26%;height:6px;border-radius:999px;background:rgba(246,241,232,.14);overflow:hidden;min-width:48px;}
+  .pbar i{display:block;height:100%;background:var(--brass);border-radius:999px;}
+  .pscore{font-family:'IBM Plex Mono',monospace;font-size:.85rem;color:var(--brass-lt);width:2.6em;flex:none;text-align:right;}
+  .pvotes{font-family:'IBM Plex Mono',monospace;font-size:.63rem;color:rgba(246,241,232,.45);width:4.4em;flex:none;}
+  .podium-empty{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:rgba(246,241,232,.55);line-height:1.6;}
+  @media (max-width:620px){.pbar{display:none;}.pvotes{width:auto;}}
+
+  footer{max-width:1240px;margin:1.5rem auto 0;padding:2rem clamp(1.2rem,5vw,3rem) 3rem;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem;line-height:1.55;}
+  footer h3{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--bordeaux);margin:0 0 .7rem;}
+  footer .bonus{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem 1.15rem;margin:0 0 1.4rem;color:#4a3a33;}
+  footer .bonus b{font-family:'Fraunces',serif;font-weight:500;color:var(--ink);}
+  footer ul{margin:.3rem 0 0;padding-left:1.1rem;}
+  footer li{margin-bottom:.35rem;}
+  footer .credit{margin-top:1.4rem;font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.03em;}
+
+  @media (max-width:560px){.search input{width:130px;}.spacer{display:none;}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}html{scroll-behavior:auto;}}
+  .card{animation:rise .5s ease both;}
+  @keyframes rise{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="floret" viewBox="0 0 24 24"><g>
+    <ellipse cx="12" cy="6.2" rx="3" ry="5.1"/>
+    <ellipse cx="12" cy="6.2" rx="3" ry="5.1" transform="rotate(60 12 12)"/>
+    <ellipse cx="12" cy="6.2" rx="3" ry="5.1" transform="rotate(120 12 12)"/>
+    <ellipse cx="12" cy="6.2" rx="3" ry="5.1" transform="rotate(180 12 12)"/>
+    <ellipse cx="12" cy="6.2" rx="3" ry="5.1" transform="rotate(240 12 12)"/>
+    <ellipse cx="12" cy="6.2" rx="3" ry="5.1" transform="rotate(300 12 12)"/>
+    <circle cx="12" cy="12" r="3.2" fill="var(--paper)"/>
+  </g></symbol>
+</svg>
+
+<header class="hero">
+  <div class="hero-florets"><svg class="floret"><use href="#floret"/></svg><svg class="floret"><use href="#floret"/></svg></div>
+  <p class="eyebrow">Guía Michelin 2026 · París &amp; alrededores</p>
+  <h1>Les <em>Deux</em> Étoiles</h1>
+  <p class="sub">Las 21 mesas de dos estrellas Michelin de París, cruzadas con los puntajes de Google Maps y precios aproximados por persona. Puntuá y comentá con Lu y Rodri.</p>
+  <div class="meta">
+    <span><b>21</b> restaurantes</span>
+    <span><b>4</b> estrenos 2026</span>
+    <span><b>€46–480</b> rango por persona</span>
+    <span>Cruce: Michelin × Google Maps</span>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="controls-inner">
+    <div class="chips" id="chips">
+      <button class="chip" data-cat="todos" aria-pressed="true">Todos</button>
+      <button class="chip" data-cat="nuevo" aria-pressed="false">Estrenos 2026</button>
+      <button class="chip" data-cat="valor" aria-pressed="false">Mejor valor</button>
+      <button class="chip" data-cat="vista" aria-pressed="false">Con vista</button>
+    </div>
+    <div class="spacer"></div>
+    <div class="tool search"><input id="search" type="search" placeholder="Buscar…" aria-label="Buscar restaurante"></div>
+    <div class="tool">
+      <label for="sort">Orden</label>
+      <select id="sort" aria-label="Ordenar por">
+        <option value="group">Lo que más nos gustó</option>
+        <option value="google">Google ★ (mayor)</option>
+        <option value="priceAsc">Precio (menor)</option>
+        <option value="priceDesc">Precio (mayor)</option>
+        <option value="az">Nombre A–Z</option>
+      </select>
+    </div>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="controls-inner cuisine-row">
+    <span class="filter-label">Tipo de cocina</span>
+    <div class="checks" id="cuisineChecks"></div>
+    <span class="mini-links"><button id="cuAll">Todas</button> · <button id="cuNone">Ninguna</button></span>
+  </div>
+</div>
+
+<div class="notebar">
+  <span class="notebar-info" id="storeInfo">Los puntajes y comentarios se comparten entre Lu, Rodri y Daniel.</span>
+  <span class="sync" id="sync" data-state="idle"><span class="sync-dot"></span><span id="syncText">Conectando…</span></span>
+</div>
+
+<main><div class="grid" id="grid"></div></main>
+
+<section class="podium" aria-labelledby="podiumTitle">
+  <div class="podium-inner">
+    <h3 id="podiumTitle">El ranking del grupo</h3>
+    <p class="ph-sub">Promedio de los puntajes de Lu, Rodri y Daniel. Va al pie a propósito: primero mirá las fichas, después el resultado.</p>
+    <div class="podium-rows" id="podiumRows"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="bonus">
+    <b>Bonus — dos 3★ que entran por precio.</b> Si querés meter una tercera estrella sin pasarte:
+    <b>Pierre Gagnaire</b> (Google 4.6) tiene menú de mediodía ~€140–185, y <b>Kei</b> (Google 4.7) ronda los €398 en cena. Ambos son "3★ a precio de 2★" al almuerzo.
+  </div>
+  <h3>Antes de reservar</h3>
+  <ul>
+    <li>Precios <b>por persona, solo comida</b> (menú degustación o à la carte). El maridaje suma €120–400 aparte; en Francia el servicio ya va incluido.</li>
+    <li>El <b>almuerzo</b> suele ser 40–60% más barato que la cena por la misma cocina — el mejor truco de valor.</li>
+    <li>Casi todos <b>cierran sábado y/o domingo</b>. Reservá los 2★ con 1–3 meses; los estrenos 2026 vuelan.</li>
+    <li>Cada ficha enlaza a <b>Google Maps</b> (reseñas, horarios y reserva) y al <b>sitio oficial</b>.</li>
+    <li><b>Notas y puntajes:</b> se comparten entre los tres y se actualizan solos cada pocos segundos. Cualquiera puede cargar la fila de cualquiera — si dos editan la <i>misma</i> fila al mismo tiempo, queda el último cambio. También quedan guardados en tu navegador como respaldo.</li>
+  </ul>
+  <p class="credit">Estrellas: Guía Michelin Francia 2026 · Puntajes y reseñas: Google Maps · Precios aproximados, verificá al reservar.</p>
+</footer>
+
+<script>
+const DATA = [
+  {name:"Alliance", area:"5º · Barrio Latino", cuisine:"Francesa", g:4.8, r:840, lunch:"€46–95", dinner:"€145–245", pf:46, cats:["nuevo","valor"], neo:true, pid:"ChIJeWenk-Rx5kcRRoSlhTbzWlM", web:"https://www.restaurant-alliance.fr", q:"Alliance, 5 Rue de Poissy, Paris", note:"Solo 8 mesas y menú sorpresa. Reviews eufóricas y precio suave para el nivel: el pick inteligente del grupo."},
+  {name:"Virtus", area:"12º · Bastille", cuisine:"Francesa", g:4.8, r:1467, lunch:null, dinner:"€145–210", pnote:"almuerzo solo viernes", pf:145, cats:["nuevo","valor"], neo:true, pid:"ChIJ__-zAA5y5kcRqLoe0pGwlcw", web:"https://www.virtus-paris.com", q:"Virtus, 29 Rue de Cotte, Paris", note:"Menú único de estación del chef Frédéric Lorimier (formado con Donckele). Salsas profundas, ambiente cálido."},
+  {name:"Hakuba", area:"1º · Cheval Blanc", cuisine:"Japonesa", g:4.8, r:105, lunch:null, dinner:"€250–350", pnote:"solo cena · omakase", pf:250, cats:["nuevo","japones"], neo:true, pid:"ChIJBWqlSgBv5kcRGYBEZG-nj7Y", web:"https://www.chevalblanc.com", q:"Hakuba, Cheval Blanc, Quai du Louvre, Paris", note:"Sushi de Takuya Watanabe + caldos y salsas afinados por Donckele. Dos turnos por noche. El estreno más premium."},
+  {name:"Le Corot", area:"Ville d'Avray · afueras", cuisine:"Francesa", g:4.8, r:81, lunch:null, dinner:"€155–185", pnote:"menús de 6–8 pasos", pf:155, cats:["nuevo","valor"], neo:true, pid:"ChIJa11Y8CJ95kcRgPrfFw87uRg", web:"https://www.etangs-corot.com/en/restaurant/corot-restaurant.html", q:"Le Corot, Les Etangs de Corot, Ville-d'Avray", note:"Verduras del Huerto del Rey de Versalles, cocina 'de la naturaleza'. Joya tranquila fuera de la ciudad."},
+  {name:"Sushi Yoshinaga", area:"2º · Ópera", cuisine:"Japonesa", g:4.8, r:189, lunch:null, dinner:"≈€330", pnote:"solo cena · omakase", pf:330, cats:["japones"], neo:false, pid:"ChIJIeDnbvVv5kcRCkaxpqe56vk", web:"https://www.27quatre.com/sushi-yoshinaga-en", q:"Sushi Yoshinaga, Rue du 4 Septembre, Paris", note:"Omakase íntimo (10 lugares). El chef es un showman que cuenta el porqué de cada pieza. Varios lo ponen sobre 3★."},
+  {name:"L'Orangerie", area:"8º · Four Seasons George V", cuisine:"Francesa", g:4.8, r:409, lunch:null, dinner:"€170–250", pnote:"almuerzo y cena", pf:170, cats:[], neo:false, pid:"ChIJZ8yNJuhv5kcRAcHrclt49NM", web:"https://www.fourseasons.com/paris/", q:"L'Orangerie, George V, Avenue George V, Paris", note:"La opción más liviana y vegetal, del chef Alan Taudon. Foco en mar y verdura, dentro del palacio George V."},
+  {name:"La Scène", area:"8º · Champs-Élysées", cuisine:"Francesa", g:4.7, r:1047, lunch:"€150–190", dinner:"€260–330", pf:150, cats:[], neo:false, web:"https://www.la-scene.paris", q:"La Scène Stéphanie Le Quellec, 32 Avenue Matignon, Paris", note:"Stéphanie Le Quellec, Chef del Año 2026 (Gault&Millau). Cocina abierta como un teatro, ritual de barra al llegar."},
+  {name:"Le Clarence", area:"8º · Champs-Élysées", cuisine:"Francesa clásica", g:4.7, r:838, lunch:"€130–190", dinner:"≈€330", pf:130, cats:[], neo:false, web:"https://www.le-clarence.paris", q:"Le Clarence, 31 Avenue Franklin Roosevelt, Paris", note:"Palacete privado de la familia Haut-Brion: la apuesta si te importa el vino. Fue #28 del mundo. Carro de quesos brutal."},
+  {name:"Le Taillevent", area:"8º · Champs-Élysées", cuisine:"Clásica", g:4.7, r:793, lunch:"≈€158", dinner:"≈€240", pf:158, cats:["clasico"], neo:false, web:"https://www.letaillevent.com", q:"Le Taillevent, 15 Rue Lamennais, Paris", note:"El clásico old-school por excelencia. Carta de vinos legendaria (literalmente un libro). Servicio pulido y atemporal."},
+  {name:"Guy Savoy", area:"6º · Monnaie de Paris", cuisine:"Francesa", g:4.7, r:1764, lunch:null, dinner:"≈€435", pnote:"almuerzo mié–sáb, más barato", pf:435, cats:["clasico","vista"], neo:false, web:"https://www.guysavoy.com", q:"Restaurant Guy Savoy, Monnaie de Paris, Quai de Conti, Paris", note:"Ex-3★, hoy 2★. Vista al Sena. La sopa de alcaucil con trufa es un clásico moderno. El más querido por el público."},
+  {name:"David Toutain", area:"7º · Invalides", cuisine:"Francesa creativa", g:4.6, r:877, lunch:"€75–135", dinner:"€195–285", pf:75, cats:["valor"], neo:false, web:"https://www.davidtoutain.com", q:"Restaurant David Toutain, 29 Rue Surcouf, Paris", note:"Cocina d'auteur vegetal y creativa (viene de Arpège). El almuerzo corto es la mejor puerta de entrada a un 2★ serio."},
+  {name:"L'Abysse au Pavillon Ledoyen", area:"8º · Champs-Élysées", cuisine:"Japonesa", g:4.6, r:255, lunch:"€120–180", dinner:"€250–320", pf:120, cats:["japones"], neo:false, web:"https://www.yannick-alleno.com", q:"L'Abysse Pavillon Ledoyen, Carré des Champs-Élysées, Paris", note:"Barra de sushi de altísimo nivel dentro del imperio de Yannick Alléno. Distinto a todo el resto de la lista."},
+  {name:"Palais Royal Restaurant", area:"1º · Palais Royal", cuisine:"Greco-francesa", g:4.6, r:753, lunch:null, dinner:"€145–195", pnote:"almuerzo y cena", pf:145, cats:["valor"], neo:false, pid:"ChIJ9Qib9SRu5kcR_FskEW89_hM", web:"https://www.palaisroyalrestaurant.com", q:"Palais Royal Restaurant, Galerie de Valois, Paris", note:"Cocina greco-francesa de Philip Chronopoulos, en los jardines del Palais Royal. Ubicación preciosa, buen valor."},
+  {name:"L'Oiseau Blanc", area:"16º · Peninsula (rooftop)", cuisine:"Francesa contemporánea", g:4.6, r:1948, lunch:"≈€160", dinner:"€200–230", pf:160, cats:["vista"], neo:false, pid:"ChIJZXST6-5v5kcR2yYcipYCUqA", web:"https://www.peninsula.com/en/paris", q:"L'Oiseau Blanc, Peninsula, Avenue Kléber, Paris", note:"Rooftop del Peninsula con vista a la Torre Eiffel. Más 'experiencia con vista' que templo; el ambiente es imbatible."},
+  {name:"Blanc", area:"16º · Trocadéro", cuisine:"Franco-japonesa", g:4.6, r:67, lunch:"≈€180", dinner:"≈€360", pnote:"almuerzo mié y sáb", pf:180, cats:["japones"], neo:false, pid:"ChIJ-We0YUpv5kcREptIC-71C_Y", web:"https://www.blanc-paris.com", q:"Blanc, 52 Rue de Longchamp, Paris", note:"Chef Shinichi Sato (ex-Passage 53), interior de Kengo Kuma. Técnica japonesa quirúrgica y carta de vinos enorme (1.500+ etiquetas)."},
+  {name:"Le Meurice Alain Ducasse", area:"1º · Tullerías", cuisine:"Francesa haute", g:4.4, r:1007, lunch:null, dinner:"€260–390", pnote:"solo cena", pf:260, cats:["clasico"], neo:false, pid:"ChIJQdFbHk9v5kcRBtFW38NDhbc", web:"https://www.dorchestercollection.com/paris/le-meurice", q:"Restaurant Le Meurice Alain Ducasse, Rue de Rivoli, Paris", note:"Salón estilo Versalles frente a las Tullerías. Ex-3★, hoy 2★. Lujo de palacio, servicio impecable."},
+  {name:"Le Jules Verne", area:"7º · Torre Eiffel", cuisine:"Francesa moderna", g:4.4, r:3606, lunch:"€160–210", dinner:"€255–320", pf:160, cats:["vista"], neo:false, pid:"ChIJl_7p8uFv5kcRj5ZGEf31ILM", web:"https://www.lejulesverne-paris.com", q:"Le Jules Verne, Tour Eiffel, Paris", note:"Dentro de la Torre Eiffel. Se paga la vista tanto como el plato. Reservá con 2+ semanas para el salón central."},
+  {name:"Le Grand Restaurant – J-F Piège", area:"8º · Madeleine", cuisine:"Francesa moderna", g:4.4, r:493, lunch:"≈€166", dinner:"≈€376", pnote:"almuerzo jue y vie", pf:166, cats:[], neo:false, web:"https://jeanfrancoispiege.com", q:"Le Grand Restaurant Jean-François Piège, 7 Rue d'Aguesseau, Paris", note:"Reviews divididas: presentación impecable, pero varios sienten que el sabor no acompaña el precio. Con la salvedad."},
+  {name:"Maison Rostang", area:"17º · Batignolles", cuisine:"Clásica", g:4.4, r:775, lunch:"€105–135", dinner:"€215–290", pf:105, cats:["clasico","valor"], neo:false, pid:"ChIJNVJhNJRv5kcRPUWaSPU5KZg", web:"https://www.maisonrostang.com", q:"Maison Rostang, 20 Rue Rennequin, Paris", note:"Clásico tradicional con carta de vinos enorme. Gran plan B: sale mejor de lo que las reviews sugieren."},
+  {name:"Marsan – Hélène Darroze", area:"6º · Saint-Germain", cuisine:"Francesa (suroeste)", g:4.3, r:990, lunch:"€75–120", dinner:"€175–260", pf:75, cats:["valor"], neo:false, web:"https://www.marsanhelenedarroze.com", q:"Marsan Hélène Darroze, 4 Rue d'Assas, Paris", note:"Cocina del suroeste, sabrosa y generosa en porciones. Ojo: dan carta sin precios a las mujeres (práctica anticuada)."},
+  {name:"Table – Bruno Verjus", area:"12º · Ledru-Rollin", cuisine:"Francesa (producto)", g:4.3, r:488, lunch:null, dinner:"≈€480", pnote:"mismo menú almuerzo y cena", pf:480, cats:[], neo:false, web:"https://table.paris", q:"Table Bruno Verjus, 3 Rue de Prague, Paris", note:"#8 del mundo (50 Best). Producto obsesivo, barra frente a la cocina. La crítica lo venera; el público, dividido."}
+];
+
+const CAT_LABEL = {nuevo:"Estreno 2026", valor:"Valor", japones:"Japonés", vista:"Con vista", clasico:"Clásico"};
+const PEOPLE = [{key:"lu",label:"Lu"},{key:"rodri",label:"Rodri"},{key:"daniel",label:"Daniel"}];
+const STORE_KEY = "paris2e_notes_v1";
+
+DATA.forEach(d=>{ d.id = d.name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); });
+
+const CUISINE_ORDER = ["Francesa moderna","Francesa clásica","Japonesa","Franco-japonesa","Greco-francesa"];
+const CLASSIC_NAMES = new Set(["Guy Savoy","Le Meurice Alain Ducasse"]);
+function cuisineType(d){
+  const c=d.cuisine.toLowerCase();
+  if(c.indexOf("franco")>-1 && c.indexOf("japon")>-1) return "Franco-japonesa";
+  if(c.indexOf("japon")>-1) return "Japonesa";
+  if(c.indexOf("greco")>-1) return "Greco-francesa";
+  if(c.indexOf("clásica")>-1 || c.indexOf("clasica")>-1 || CLASSIC_NAMES.has(d.name)) return "Francesa clásica";
+  return "Francesa moderna";
+}
+DATA.forEach(d=>{ d.ctype = cuisineType(d); });
+
+let NOTES = {};
+let storageOK = true;
+try { NOTES = JSON.parse(localStorage.getItem(STORE_KEY) || "{}") || {}; }
+catch(e){ NOTES = {}; storageOK = false; }
+function saveNotes(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(NOTES)); }catch(e){ storageOK=false; } }
+
+function noteFor(id,person){ return (NOTES[id] && NOTES[id][person]) || {}; }
+function setNote(id,person,field,val){
+  NOTES[id]=NOTES[id]||{}; NOTES[id][person]=NOTES[id][person]||{};
+  NOTES[id][person][field]=val; saveNotes();
+  Sync.push(person);
+}
+
+/* ── Sincronización entre los tres ────────────────────────────────────────
+   Un documento por persona (…-lu, …-rodri, …-daniel): cada fila escribe solo
+   en su propio documento, así dos personas cargando filas distintas nunca se
+   pisan. Lectura cada 8s; localStorage queda como respaldo local.          */
+const Sync = (function(){
+  const BASE = "https://textdb.online";
+  const SLUG = "p2e-25f35a6f43511574";
+  const POLL_MS = 8000;
+  const DEBOUNCE_MS = 900;
+  const pending = new Set();      // personas con escritura en vuelo o en cola
+  const timers = {};
+  let lastOK = 0, everOK = false, inFlight = 0;
+
+  const el = document.getElementById('sync');
+  const txt = document.getElementById('syncText');
+  function state(s, message){
+    if(!el) return;
+    el.dataset.state = s;
+    if(txt) txt.textContent = message;
+  }
+  function ago(){
+    if(!lastOK) return "";
+    const s = Math.round((Date.now()-lastOK)/1000);
+    if(s < 10) return "recién";
+    if(s < 60) return "hace "+s+"s";
+    const m = Math.round(s/60);
+    return "hace "+m+" min";
+  }
+  function idle(){
+    if(inFlight > 0) return;
+    if(everOK) state('ok', "Sincronizado "+ago());
+    else state('err', "Sin sincronizar");
+  }
+
+  // Documento de una persona: {restaurantId: {score, comment}}
+  function docFor(person){
+    const out = {};
+    Object.keys(NOTES).forEach(id=>{
+      const n = NOTES[id] && NOTES[id][person];
+      if(!n) return;
+      const score = n.score||0, comment = (n.comment||"").trim();
+      if(score || comment) out[id] = {score:score, comment:comment};
+    });
+    return out;
+  }
+
+  function push(person){
+    pending.add(person);
+    clearTimeout(timers[person]);
+    timers[person] = setTimeout(()=>{ write(person); }, DEBOUNCE_MS);
+    state('busy', "Guardando…");
+  }
+
+  function write(person){
+    const url = BASE+"/update/?key="+encodeURIComponent(SLUG+"-"+person)+
+                "&value="+encodeURIComponent(JSON.stringify(docFor(person)));
+    inFlight++;
+    state('busy', "Guardando…");
+    fetch(url, {method:"GET", cache:"no-store"})
+      .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); lastOK=Date.now(); everOK=true; pending.delete(person); })
+      .catch(()=>{ state('err', "Sin conexión — guardado local"); })
+      .finally(()=>{ inFlight--; idle(); });
+  }
+
+  function readPerson(person){
+    const url = BASE+"/"+encodeURIComponent(SLUG+"-"+person)+"?t="+Date.now();
+    return fetch(url, {cache:"no-store"})
+      .then(r=>{ if(!r.ok) throw new Error("HTTP "+r.status); return r.text(); })
+      .then(t=>{
+        t = (t||"").trim();
+        if(!t) return {};
+        try{ const o = JSON.parse(t); return (o && typeof o === "object") ? o : {}; }
+        catch(e){ return {}; }
+      });
+  }
+
+  // Trae los cambios de los demás. No toca a una persona con escritura pendiente
+  // (lo local es más nuevo) ni el campo que estás editando en ese momento.
+  function pull(){
+    inFlight++;
+    const focused = document.activeElement;
+    Promise.all(PEOPLE.map(p=>
+      readPerson(p.key).then(doc=>({person:p.key, doc:doc})).catch(()=>null)
+    )).then(results=>{
+      let ok = false, changed = false;
+      results.forEach(res=>{
+        if(!res) return;
+        ok = true;
+        if(pending.has(res.person)) return;
+        DATA.forEach(d=>{
+          const remote = res.doc[d.id] || {};
+          const local = noteFor(d.id, res.person);
+          const rScore = remote.score||0, rComment = remote.comment||"";
+          if((local.score||0) !== rScore || (local.comment||"") !== rComment){
+            NOTES[d.id] = NOTES[d.id] || {};
+            NOTES[d.id][res.person] = {score:rScore, comment:rComment};
+            changed = true;
+          }
+        });
+      });
+      if(ok){ lastOK = Date.now(); everOK = true; }
+      if(changed){ saveNotes(); applyRemote(focused); }
+    }).finally(()=>{ inFlight--; idle(); });
+  }
+
+  // Refresca los controles en su lugar: nunca re-ordena las tarjetas por un
+  // cambio ajeno (saltarían mientras las estás leyendo) ni pisa el campo con foco.
+  function applyRemote(focused){
+    grid.querySelectorAll('.note-score').forEach(sel=>{
+      if(sel === focused) return;
+      const v = String(noteFor(sel.dataset.id, sel.dataset.person).score||0);
+      if(sel.value !== v) sel.value = v;
+    });
+    grid.querySelectorAll('.note-comment').forEach(inp=>{
+      if(inp === focused) return;
+      const v = noteFor(inp.dataset.id, inp.dataset.person).comment||"";
+      if(inp.value !== v) inp.value = v;
+    });
+    DATA.forEach(d=>updateBadge(d.id));
+    renderPodium();
+  }
+
+  function start(){
+    pull();
+    setInterval(()=>{ if(!document.hidden) pull(); }, POLL_MS);
+    document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) pull(); });
+    setInterval(idle, 15000);
+    window.addEventListener('beforeunload', ()=>{
+      // descarga lo que quedó en el debounce antes de cerrar
+      pending.forEach(p=>{
+        const url = BASE+"/update/?key="+encodeURIComponent(SLUG+"-"+p)+
+                    "&value="+encodeURIComponent(JSON.stringify(docFor(p)));
+        if(navigator.sendBeacon) navigator.sendBeacon(url);
+      });
+    });
+  }
+
+  return {push:push, pull:pull, start:start};
+})();
+function groupAvg(id){
+  const vals = PEOPLE.map(p=>noteFor(id,p.key).score).filter(v=>v>0);
+  if(!vals.length) return null;
+  return vals.reduce((a,b)=>a+b,0)/vals.length;
+}
+
+const grid = document.getElementById('grid');
+const countEl = document.getElementById('count');
+let state = {cat:"todos", sort:"group", q:"", cuisines:new Set(CUISINE_ORDER)};
+
+function starsSVG(){return '<span class="stars"><svg class="floret"><use href="#floret"/></svg><svg class="floret"><use href="#floret"/></svg></span>';}
+function gmaps(d){
+  let u = 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.q);
+  if(d.pid) u += '&query_place_id='+d.pid;
+  return u;
+}
+function priceLine(d){
+  const parts=[];
+  if(d.lunch) parts.push('<span class="v">Alm. '+d.lunch+'</span>');
+  if(d.dinner) parts.push('<span class="v">Cena '+d.dinner+'</span>');
+  let html = parts.join('<span class="k" style="min-width:0"> · </span>');
+  if(d.pnote) html += '<div class="k" style="min-width:0;margin-top:.1rem">'+d.pnote+'</div>';
+  return html;
+}
+function notesPanel(d){
+  const rows = PEOPLE.map(p=>{
+    const sc = noteFor(d.id,p.key).score||0;
+    let opts='<option value="0">–</option>';
+    for(let v=1;v<=5;v++){opts+='<option value="'+v+'"'+(sc===v?' selected':'')+'>'+v+'</option>';}
+    return '<div class="note-row">'+
+      '<span class="note-name">'+p.label+'</span>'+
+      '<select class="note-score" data-id="'+d.id+'" data-person="'+p.key+'" aria-label="Puntaje de '+p.label+'">'+opts+'</select>'+
+      '<input class="note-comment" data-id="'+d.id+'" data-person="'+p.key+'" placeholder="Comentario…" aria-label="Comentario de '+p.label+'">'+
+    '</div>';
+  }).join('');
+  return '<div class="notes"><div class="notes-head">Notas y puntajes del grupo</div><div class="note-rows">'+rows+'</div></div>';
+}
+
+function render(){
+  let list = DATA.filter(d=>{
+    const okCat = state.cat==="todos" || d.cats.includes(state.cat);
+    const okCuisine = state.cuisines.has(d.ctype);
+    const okQ = !state.q || (d.name+d.area+d.cuisine).toLowerCase().includes(state.q);
+    return okCat && okCuisine && okQ;
+  });
+  list.sort((a,b)=>{
+    if(state.sort==="group"){ const ga=groupAvg(a.id), gb=groupAvg(b.id); return (gb==null?-1:gb)-(ga==null?-1:ga) || b.g-a.g; }
+    if(state.sort==="google") return b.g-a.g || b.r-a.r;
+    if(state.sort==="priceAsc") return a.pf-b.pf;
+    if(state.sort==="priceDesc") return b.pf-a.pf;
+    if(state.sort==="az") return a.name.localeCompare(b.name,'es');
+  });
+  countEl.textContent = list.length+" de "+DATA.length;
+  grid.innerHTML = "";
+  if(!list.length){grid.innerHTML='<div class="empty">Ningún restaurante coincide con ese filtro.</div>';renderPodium();return;}
+  list.forEach((d,i)=>{
+    const tags = d.cats.map(c=>'<span class="tag">'+CAT_LABEL[c]+'</span>').join('');
+    const avg = groupAvg(d.id);
+    const gb = '<span class="group-badge" data-card-badge="'+d.id+'"'+(avg?'':' hidden')+'>Grupo '+(avg?avg.toFixed(1):'')+'</span>';
+    const card = document.createElement('article');
+    card.className='card';
+    card.style.animationDelay=(Math.min(i,12)*0.035)+'s';
+    card.innerHTML =
+      '<div class="card-top"><div class="stars-wrap">'+starsSVG()+'</div><div class="ct-right">'+(d.neo?'<span class="badge-new">Nuevo 2026</span>':'')+gb+'</div></div>'+
+      '<h2 class="name">'+d.name+'</h2>'+
+      '<div class="place"><span>'+d.area+'</span><span class="dot"></span><span>'+d.cuisine+'</span></div>'+
+      '<div class="divider"></div>'+
+      '<div class="data">'+
+        '<div class="row"><span class="k">Google</span><span class="v gscore">'+d.g.toFixed(1)+' <span>('+d.r.toLocaleString('es')+')</span></span></div>'+
+        '<div class="row"><span class="k">Precio</span><span class="v">'+priceLine(d)+'</span></div>'+
+      '</div>'+
+      '<p class="note">'+d.note+'</p>'+
+      (tags?'<div class="tags">'+tags+'</div>':'')+
+      '<div class="links">'+
+        '<a class="btn-link" href="'+gmaps(d)+'" target="_blank" rel="noopener">Google Maps ↗</a>'+
+        '<a class="btn-link alt" href="'+d.web+'" target="_blank" rel="noopener">Sitio web ↗</a>'+
+      '</div>'+
+      notesPanel(d);
+    grid.appendChild(card);
+  });
+  // apply saved comment values safely (avoid HTML injection in attributes)
+  grid.querySelectorAll('.note-comment').forEach(inp=>{
+    const c = noteFor(inp.dataset.id, inp.dataset.person).comment;
+    if(c) inp.value = c;
+  });
+  renderPodium();
+}
+
+function updateBadge(id){
+  const badge = grid.querySelector('[data-card-badge="'+(window.CSS&&CSS.escape?CSS.escape(id):id)+'"]');
+  if(!badge) return;
+  const avg = groupAvg(id);
+  if(avg){ badge.textContent='Grupo '+avg.toFixed(1); badge.hidden=false; }
+  else { badge.hidden=true; }
+}
+
+function renderPodium(){
+  const rows = document.getElementById('podiumRows');
+  if(!rows) return;
+  const scored = DATA.map(d=>{
+    const vals = PEOPLE.map(p=>noteFor(d.id,p.key).score).filter(v=>v>0);
+    return {name:d.name, avg:vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:null, votes:vals.length};
+  }).filter(x=>x.avg!=null);
+
+  if(!scored.length){
+    rows.innerHTML = '<p class="podium-empty">Todavía nadie puntuó nada. Cargá tus notas en las fichas de arriba y el ranking aparece acá.</p>';
+    return;
+  }
+  scored.sort((a,b)=> b.avg-a.avg || b.votes-a.votes || a.name.localeCompare(b.name,'es'));
+  rows.innerHTML = scored.slice(0,5).map((x,i)=>
+    '<div class="prow">'+
+      '<span class="prank">'+(i+1)+'</span>'+
+      '<span class="pname">'+x.name+'</span>'+
+      '<span class="pbar"><i style="width:'+(x.avg/5*100).toFixed(0)+'%"></i></span>'+
+      '<span class="pscore">'+x.avg.toFixed(1)+'</span>'+
+      '<span class="pvotes">'+x.votes+(x.votes===1?' voto':' votos')+'</span>'+
+    '</div>'
+  ).join('');
+}
+
+// events
+document.getElementById('chips').addEventListener('click', e=>{
+  const b=e.target.closest('.chip'); if(!b) return;
+  state.cat=b.dataset.cat;
+  document.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed', c===b));
+  render();
+});
+document.getElementById('sort').addEventListener('change', e=>{state.sort=e.target.value;render();});
+document.getElementById('search').addEventListener('input', e=>{state.q=e.target.value.trim().toLowerCase();render();});
+
+// cuisine-type checkboxes
+(function(){
+  const cc=document.getElementById('cuisineChecks');
+  CUISINE_ORDER.forEach(t=>{
+    const n=DATA.filter(d=>d.ctype===t).length;
+    const lab=document.createElement('label'); lab.className='check';
+    lab.innerHTML='<input type="checkbox" data-ctype="'+t+'" checked> <span class="ct-txt">'+t+'</span> <span class="ct-count">('+n+')</span>';
+    cc.appendChild(lab);
+  });
+  function syncChecks(){ cc.querySelectorAll('input').forEach(i=>{ i.checked=state.cuisines.has(i.dataset.ctype); i.closest('.check').classList.toggle('off', !i.checked); }); }
+  cc.addEventListener('change', e=>{
+    const el=e.target; if(!el.matches('input[type=checkbox]')) return;
+    if(el.checked) state.cuisines.add(el.dataset.ctype); else state.cuisines.delete(el.dataset.ctype);
+    el.closest('.check').classList.toggle('off', !el.checked);
+    render();
+  });
+  document.getElementById('cuAll').addEventListener('click', ()=>{ state.cuisines=new Set(CUISINE_ORDER); syncChecks(); render(); });
+  document.getElementById('cuNone').addEventListener('click', ()=>{ state.cuisines=new Set(); syncChecks(); render(); });
+})();
+
+grid.addEventListener('change', e=>{
+  const el=e.target;
+  if(el.classList.contains('note-score')){
+    setNote(el.dataset.id, el.dataset.person, 'score', +el.value);
+    if(state.sort==='group'){ render(); } else { updateBadge(el.dataset.id); renderPodium(); }
+  }
+});
+grid.addEventListener('input', e=>{
+  const el=e.target;
+  if(el.classList.contains('note-comment')){
+    setNote(el.dataset.id, el.dataset.person, 'comment', el.value);
+  }
+});
+
+render();
+Sync.start();
+</script>
+</body>
+</html>
